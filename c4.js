@@ -1,10 +1,12 @@
 let firstPlayer;
 let board;
 let ai;
+let winConditions;
 
 function setup() {
   board = new Board();
   ai = new AI();
+  winConditions = new WinConditions();
 
   firstPlayer = Math.floor(Math.random()*2);
 }
