@@ -1,11 +1,11 @@
 class WinConditions {
-  let winner;
 
   constructor() {
+    this.winner = null;
   }
 
   getWinner(grid) {
-    winner = null;
+    this.winner = null;
     checkHorizontal(grid);
     checkVertical(grid);
     checkDiagonalDown(grid);
@@ -13,7 +13,7 @@ class WinConditions {
   }
 
   checkHorizontal(grid) {
-    
+
   }
 
   checkVertical(grid) {
