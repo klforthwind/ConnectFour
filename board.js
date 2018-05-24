@@ -2,8 +2,8 @@ class Board {
 
   constructor() {
   this.sideLength = 75;
-  this.rows = 7;
-  this.cols = 6;
+  this.rows = 6;
+  this.cols = 7;
   this.grid = [...Array(this.rows).keys()].map(i => Array(this.cols));
   this.black = color(0,0,0);
   this.blue = color(0,0,220);
@@ -16,7 +16,7 @@ class Board {
       }
     }
 
-    createCanvas(this.sideLength * this.rows, this.sideLength * this.cols);
+    createCanvas(this.sideLength * this.cols, this.sideLength * this.rows);
     background(this.blue);
     this.update();
   }
@@ -26,8 +26,8 @@ class Board {
       for (let j = 0; j < this.cols; j++) {
         let color = this.grid[i][j];
         fill(color);
-        let xPos = i*this.sideLength + this.sideLength / 2;
-        let yPos = j*this.sideLength + this.sideLength /2;
+        let yPos = (this.rows - 1 - i) * this.sideLength + this.sideLength /2;
+        let xPos = j * this.sideLength + this.sideLength / 2;
         let diameter = this.sideLength - 10;
         ellipse(xPos, yPos, diameter, diameter);
       }
@@ -38,7 +38,7 @@ class Board {
     let row = null;
     for (let i = 0; i < this.rows; i++) {
       if (this.grid[i][col] === this.black) {
-        this.grid[i][col] = (player === 1) ? this.red : this.yellow;
+        this.grid[i][col] = (player % 2 === 1) ? this.red : this.yellow;
         row = true;
         break;
       }
@@ -48,7 +48,6 @@ class Board {
   }
 
   getCol(px) {
-    console.log((px - (px % this.sideLength)) / this.sideLength);
     return (px - (px % this.sideLength)) / this.sideLength;
   }
 

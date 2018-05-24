@@ -10,9 +10,13 @@ function setup() {
 }
 
 function draw() {
+  play();
+}
+
+function play() {
   if (firstPlayer % 2 === 0) {
-    ai.playMove(board, firstPlayer);
-    firstPlayer++;
+    let didMove = ai.playMove(board, firstPlayer);
+    if (didMove) firstPlayer++;
   }
 }
 
