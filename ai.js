@@ -1,9 +1,10 @@
 class AI {
-  constructor() {
 
+  constructor(color) {
+    this.color = color;
   }
 
-  playMove(board, player) {
-    return board.putPiece(player, Math.floor(Math.random() * 7));
+  playMove(board) {
+    return board.putPiece(this.color, Math.floor(Math.random() * 7));
   }
 }

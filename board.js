@@ -9,6 +9,9 @@ class Board {
   this.blue = color(0,0,220);
   this.red = color(220,0,0);
   this.yellow = color(220,220,0);
+  this.winner = false;
+
+  this.wc = new WinConditions();
 
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
@@ -34,17 +37,23 @@ class Board {
     }
   }
 
-  putPiece(player, col) {
+  putPiece(color, col) {
     let row = null;
     for (let i = 0; i < this.rows; i++) {
       if (this.grid[i][col] === this.black) {
-        this.grid[i][col] = (player % 2 === 1) ? this.red : this.yellow;
-        row = true;
+        this.grid[i][col] = color;
+        row = i;
+        this.winner = this.wc.checkForWin(this.grid, color, row, col);
         break;
       }
     }
+
     this.update();
-    return row;
+    return row !== null;
+  }
+
+  getWinner() {
+    return this.winner;
   }
 
   getCol(px) {
