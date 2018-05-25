@@ -1,6 +1,7 @@
 class WinConditions {
 
   constructor() {
+    this.three = 3;
   }
 
   getWinner(board) {
@@ -66,11 +67,83 @@ class WinConditions {
   }
 
   checkDiagonalDown(board) {
-    return null;
+    let winner = null;
+    // for (let i = 0; i < 6; i++) {
+    //   let redTiles = [];
+    //   let yellowTiles = [];
+    //   let slots = [4,5,6,6,5,4];
+    //   let row = max(i, board.rows - 1);
+    //   for (let j = 0; j < slots[row]; j++) {
+    //     if (board.grid[row - j][j + this.overflow(i, row)] === board.red) {
+    //       redTiles[redTiles.length] = j;
+    //     } else if (board.grid[row - j][j + this.overflow(i, row)] === board.yellow) {
+    //       yellowTiles[yellowTiles.length] = j;
+    //     }
+    //   }
+    //   let fourYellow = this.fourConsecutiveNumbers(yellowTiles);
+    //   let fourRed = this.fourConsecutiveNumbers(redTiles);
+    //   if (fourYellow) {
+    //     winner = "Yellow";
+    //   } else if (fourRed) {
+    //     winner = "Red";
+    //   }
+    //   if (winner !== null) break;
+    // }
+    return winner;
   }
 
+  // overflow(value, ceiling) {
+  //   return (value > ceiling) ? value - ceiling : 0;
+  // }
+  //
+  // max(value, max) {
+  //   return (value > max) ? max : value;
+  // }
+
   checkDiagonalUp(board) {
-    return null;
+    let winner = null;
+    let grid = this.simplify(board.grid, true);
+    for (let j = 0; j < 6; j++) {
+      let redTiles = [];
+      let yellowTiles = [];
+
+      for (let i = 0; i < grid.length; i++) {
+        if (grid[i][j] === board.red) {
+          redTiles[redTiles.length] = i;
+        } else if (grid[i][j] === board.yellow) {
+          yellowTiles[yellowTiles.length] = i;
+        }
+      }
+      let fourYellow = this.fourConsecutiveNumbers(yellowTiles);
+      let fourRed = this.fourConsecutiveNumbers(redTiles);
+      if (fourYellow) {
+        winner = "Yellow";
+      } else if (fourRed) {
+        winner = "Red";
+      }
+      if (winner !== null) break;
+    }
+    return winner;
+  }
+
+  simplify(oldGrid, moveRight) {
+    let oldRows = oldGrid.length;
+    let oldCols = oldGrid[0].length;
+
+    let newCols = (oldRows > oldCols) ? oldCols: oldRows;
+    let newRows = (oldRows + oldCols - this.three * 2 - 1);
+    let newGrid = [...Array(newRows).keys()].map(i => Array(newCols));
+
+    for (let i = 0; i < newRows; i++) {
+      for (let j = 0; j < newCols; j++) {
+        let oldCol = (i < this.three) ? j + this.three - i: j;
+        let newCol = (newRows - this.three < i) ? j + i - this.three: j;
+        if (newCol < newCols) {
+          newGrid[i][newCol] = oldGrid[i][oldCol];
+        }
+      }
+    }
+    return newGrid;
   }
 
   checkGridSpace(board) {
