@@ -9,7 +9,9 @@ class Board {
   this.blue = color(0,0,220);
   this.red = color(220,0,0);
   this.yellow = color(220,220,0);
-  this.winner = false;
+  this.winner = null;
+  this.lastRow = null;
+  this.lastCol = null;
 
   this.wc = new WinConditions();
 
@@ -27,23 +29,32 @@ class Board {
   update() {
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
-        let color = this.grid[i][j];
-        fill(color);
-        let yPos = (this.rows - 1 - i) * this.sideLength + this.sideLength /2;
-        let xPos = j * this.sideLength + this.sideLength / 2;
-        let diameter = this.sideLength - 10;
-        ellipse(xPos, yPos, diameter, diameter);
+        let piece = this.grid[i][j];
+        let sizeDiff = (i === this.lastRow && j === this.lastCol) ? -5 : 0;
+        this.circle(i, j, color(0,0,0), this.sideLength);
+        this.circle(i, j, piece, this.sideLength + sizeDiff);
       }
     }
   }
 
-  putPiece(color, col) {
+  circle(i, j, color, size) {
+    fill(color);
+    let yPos = (this.rows - 1 - i) * this.sideLength + this.sideLength /2;
+    let xPos = j * this.sideLength + this.sideLength / 2;
+    let diameter = size - 10;
+    ellipse(xPos, yPos, diameter, diameter);
+  }
+
+  putPiece(color, col, move) {
     let row = null;
     for (let i = 0; i < this.rows; i++) {
       if (this.grid[i][col] === this.black) {
         this.grid[i][col] = color;
         row = i;
-        this.winner = this.wc.checkForWin(this.grid, color, row, col);
+        this.lastRow = i;
+        this.lastCol = col;
+        this.winner = (this.wc.checkForWin(this.grid, color, row, col)) ? color : null;
+        this.checkForTie(move);
         break;
       }
     }
@@ -52,8 +63,10 @@ class Board {
     return row !== null;
   }
 
-  getWinner() {
-    return this.winner;
+  checkForTie(move) {
+    if (this.winner === null && move === this.grid.length * this.grid[0].length) {
+      this.winner = "tie";
+    }
   }
 
   getCol(px) {

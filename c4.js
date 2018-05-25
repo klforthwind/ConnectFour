@@ -1,22 +1,21 @@
-let firstPlayer;
 let board;
 let ai;
 let wc;
-let winner;
-let noWinner = true;
 let playerColor;
-
+let move;
+let lead;
 
 function setup() {
   board = new Board();
+  move = 1;
 
-  firstPlayer = Math.floor(Math.random()*2);
-  let aiColor = (firstPlayer % 2 === 1) ? board.red : board.yellow;
-  playerColor = (firstPlayer % 2 === 0) ? board.red : board.yellow;
+  lead = [0,0];
+  lead[Math.floor(Math.random()*2)] = 1;
+  let color = [board.yellow, board.red];
+  ai = new AI(color[lead[0]]);
+  playerColor = color[lead[1]];
 
-  ai = new AI(aiColor);
   wc = new WinConditions();
-  winner = null;
 }
 
 function draw() {
@@ -24,23 +23,23 @@ function draw() {
 }
 
 function play() {
-  if (firstPlayer % 2 === 0 && winner == null) {
-    let didMove = ai.playMove(board);
-    if (didMove) firstPlayer++;
-    if (board.getWinner() === true) {
-      winner = ai.color;
-      console.log(winner);
-    }
+  if (move % 2 === lead[0] && board.winner == null) {
+    let didMove = ai.playMove(board, move);
+    if (didMove) move++;
+    isWinner();
   }
 }
 
 function mousePressed() {
-  if (firstPlayer % 2 === 1 && winner == null) {
-    let didMove = board.putPiece(playerColor, board.getCol(mouseX));
-    if (didMove) firstPlayer++;
-    if (board.getWinner() === true) {
-      winner = ai.color;
-      console.log(winner);
-    }
+  if (move % 2 === lead[1] && board.winner === null) {
+    let didMove = board.putPiece(playerColor, board.getCol(mouseX), move);
+    if (didMove) move++;
+    isWinner();
+  }
+}
+
+function isWinner() {
+  if (board.winner !== null) {
+    console.log(board.winner);
   }
 }

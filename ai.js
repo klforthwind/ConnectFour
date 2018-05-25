@@ -5,6 +5,6 @@ class AI {
   }
 
   playMove(board) {
-    return board.putPiece(this.color, Math.floor(Math.random() * 7));
+    return board.putPiece(this.color, Math.floor(Math.random() * 7), move);
   }
 }
