@@ -1,29 +1,33 @@
 class Board {
 
   constructor() {
-  this.sideLength = 75;
-  this.rows = 6;
-  this.cols = 7;
-  this.grid = [...Array(this.rows).keys()].map(i => Array(this.cols));
-  this.black = color(0,0,0);
-  this.blue = color(0,0,220);
-  this.red = color(220,0,0);
-  this.yellow = color(220,220,0);
-  this.winner = null;
-  this.lastRow = null;
-  this.lastCol = null;
+    this.sideLength = 75;
+    this.rows = 6;
+    this.cols = 7;
+    this.grid = [...Array(this.rows).keys()].map(i => Array(this.cols));
+    this.black = color(0,0,0);
+    this.blue = color(0,0,220);
+    this.red = color(220,0,0);
+    this.yellow = color(220,220,0);
+    this.winner = null;
+    this.lastRow = null;
+    this.lastCol = null;
 
-  this.wc = new WinConditions();
+    this.wc = new WinConditions();
 
+    this.clear();
+
+    createCanvas(this.sideLength * this.cols, this.sideLength * this.rows);
+    background(this.blue);
+    this.update();
+  }
+
+  clear() {
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
         this.grid[i][j] = this.black;
       }
     }
-
-    createCanvas(this.sideLength * this.cols, this.sideLength * this.rows);
-    background(this.blue);
-    this.update();
   }
 
   update() {
