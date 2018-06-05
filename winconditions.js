@@ -1,6 +1,7 @@
 class WinConditions {
 
   constructor() {
+    // Consecutive amount of pieces to win
     this.winLength = 4;
     this.grid = null;
   }
@@ -8,10 +9,11 @@ class WinConditions {
   checkForWin(grid, color, row, col) {
     this.grid = grid;
 
-    if (this.checkVert(color, row, col) >= 4) return true;
-    if (this.checkHoriz(color, row, col) >= 4) return true;
-    if (this.checkDiagUp(color, row, col) >= 4) return true;
-    if (this.checkDiagDown(color, row, col) >= 4) return true;
+    let wL = this.winLength;
+    if (this.checkVert(color, row, col) >= wL) return true;
+    if (this.checkHoriz(color, row, col) >= wL) return true;
+    if (this.checkDiagUp(color, row, col) >= wL) return true;
+    if (this.checkDiagDown(color, row, col) >= wL) return true;
 
     return false;
   }
@@ -45,16 +47,7 @@ class WinConditions {
       this.grid[row][col] !== undefined && this.grid[row][col] === color;
   }
 
-  checkGridSpace(board) {
-    let spaceFull = true;
-    for (let i = 0; i < board.rows; i++) {
-      for (let j = 0; j < board.cols; j++) {
-        if (board.grid[i][j] === board.black) {
-          spaceFull = false;
-          break;
-        }
-      }
-    }
-    return (spaceFull) ? "tie" : null;
+  checkForTie(winner, move) {
+    return winner === null && move > this.grid.length * this.grid[0].length;
   }
 }
