@@ -48,6 +48,6 @@ class WinConditions {
   }
 
   checkForTie(winner, move) {
-    return winner === null && move > this.grid.length * this.grid[0].length;
+    return winner === null && move + 1 > this.grid.length * this.grid[0].length;
   }
 }

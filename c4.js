@@ -29,9 +29,6 @@ class ConnectFour {
       }
     } else {
       console.log(this.board.winner);
-      // this.board.clear();
-      // this.move = 1;
-      // this.board.winner = null;
     }
   }
 

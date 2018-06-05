@@ -72,7 +72,6 @@ class Board {
         this.lastCol = col;
         // Check for winner or tie
         this.winner = (this.wc.checkForWin(this.grid, color, row, col)) ? move % 2 : null;
-        console.log(this.wc.checkForTie(this.winner, move));
         if (this.wc.checkForTie(this.winner, move)) this.winner = "tie";
         break;
       }
