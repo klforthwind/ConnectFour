@@ -1,13 +1,13 @@
-let c4;
+let game;
 
 function setup() {
-  c4 = new ConnectFour(true, true);
+  game = new ConnectFour(false);
 }
 
 function draw() {
-    c4.loop();
+    game.draw();
 }
 
 function mousePressed() {
-  c4.mousePressed();
+  game.mousePressed();
 }
