@@ -32,7 +32,7 @@ class ConnectFour {
     if (this.board.winner === null) {
       let player = (this.turnNum % 2 === this.lead[0]) ? this.p1 : this.p2;
       if (!player.isAI()) {
-        let didMove = this.board.putPiece(player.getColor(), this.board.getCol(mouseX), this.turnNum);
+        let didMove = this.board.putPiece(player.color, this.board.getCol(mouseX), this.turnNum);
         if (didMove) this.turnNum++;
       }
     }

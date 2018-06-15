@@ -21,8 +21,4 @@ class Human {
   isAI() {
     return false;
   }
-
-  getColor() {
-    return this.color;
-  }
 }
