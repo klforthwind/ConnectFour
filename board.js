@@ -21,8 +21,8 @@ class Board {
     // Clear the connect four board
     this.clear();
     // Show visuals of the board
-    createCanvas(this.pxLength * this.cols, this.pxLength * this.rows);
-    background(this.blue);
+    this.bg = createGraphics(this.pxLength * this.cols, this.pxLength * this.rows);
+    this.bg.background(this.blue);
     this.update();
   }
 
@@ -49,13 +49,13 @@ class Board {
   // Draw a circle onto the canvas
   circle(r, c, color, size) {
     // Change brush color
-    fill(color);
+    this.bg.fill(color);
     // Get coords and size of where to paint the circle
     let yPos = (this.rows - 1 - r) * this.pxLength + this.pxLength /2;
     let xPos = c * this.pxLength + this.pxLength / 2;
     let diameter = size - 10;
     // Show the circle on canvas
-    ellipse(xPos, yPos, diameter, diameter);
+    this.bg.ellipse(xPos, yPos, diameter, diameter);
   }
 
   // Add a game piece to the board grid
